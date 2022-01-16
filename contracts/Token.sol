@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
-import "openzeppelin-solidity/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
-import "openzeppelin-solidity/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
-import "openzeppelin-solidity/contracts-upgradeable/security/PausableUpgradeable.sol";
-import "openzeppelin-solidity/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "openzeppelin-solidity/contracts-upgradeable/token/ERC20/extensions/draft-ERC20PermitUpgradeable.sol";
-import "openzeppelin-solidity/contracts-upgradeable/token/ERC20/extensions/ERC20FlashMintUpgradeable.sol";
-import "openzeppelin-solidity/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/draft-ERC20PermitUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20FlashMintUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 /// @custom:security-contact phillip.hamnett@chintai.io
 contract ChintaiExchangeToken is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, PausableUpgradeable, AccessControlUpgradeable, ERC20PermitUpgradeable, ERC20FlashMintUpgradeable {
