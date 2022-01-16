@@ -1,8 +1,52 @@
-pragma solidity ^0.8.0;
-import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
-import "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
-import "openzeppelin-solidity/contracts/access/Ownable.sol";
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.2;
 
-contract CHEX is ERC20, Ownable {
-  constructor() ERC20("Chintai Exchange Token", "CHEX") public { }
+import "openzeppelin-solidity/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import "openzeppelin-solidity/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
+import "openzeppelin-solidity/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "openzeppelin-solidity/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "openzeppelin-solidity/contracts-upgradeable/token/ERC20/extensions/draft-ERC20PermitUpgradeable.sol";
+import "openzeppelin-solidity/contracts-upgradeable/token/ERC20/extensions/ERC20FlashMintUpgradeable.sol";
+import "openzeppelin-solidity/contracts-upgradeable/proxy/utils/Initializable.sol";
+
+/// @custom:security-contact phillip.hamnett@chintai.io
+contract ChintaiExchangeToken is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, PausableUpgradeable, AccessControlUpgradeable, ERC20PermitUpgradeable, ERC20FlashMintUpgradeable {
+  bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+  bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+
+  /// @custom:oz-upgrades-unsafe-allow constructor
+  constructor() initializer {}
+
+  function initialize() initializer public {
+    __ERC20_init("Chintai Exchange Token", "CHEX");
+    __ERC20Burnable_init();
+    __Pausable_init();
+    __AccessControl_init();
+    __ERC20Permit_init("Chintai Exchange Token");
+    __ERC20FlashMint_init();
+
+    _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    _grantRole(PAUSER_ROLE, msg.sender);
+    _grantRole(MINTER_ROLE, msg.sender);
+  }
+
+  function pause() public onlyRole(PAUSER_ROLE) {
+    _pause();
+  }
+
+  function unpause() public onlyRole(PAUSER_ROLE) {
+    _unpause();
+  }
+
+  function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
+    _mint(to, amount);
+  }
+
+  function _beforeTokenTransfer(address from, address to, uint256 amount)
+    internal
+    whenNotPaused
+    override
+    {
+      super._beforeTokenTransfer(from, to, amount);
+    }
 }
