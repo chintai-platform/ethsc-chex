@@ -2,4 +2,4 @@ npm init -y
 npm i truffle
 npx truffle init
 npm i --save-dev @truffle/hdwallet-provider
-npm i @truffle/openzeppelin-solidity
+npm i openzeppelin-solidity
