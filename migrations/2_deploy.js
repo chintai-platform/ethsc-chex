@@ -1,7 +1,9 @@
-// migrations/2_deploy.js
-// SPDX-License-Identifier: MIT
-const CHEX = artifacts.require("CHEX");
+// migrations/NN_deploy_upgradeable_box.js
+const { deployProxy } = require('@openzeppelin/truffle-upgrades');
 
-module.exports = function(deployer) {
-    deployer.deploy(CHEX);
+const CHEX = artifacts.require('CHEX');
+
+module.exports = async function (deployer) {
+  const instance = await deployProxy(CHEX, [], { deployer });
+  console.log('Deployed', instance.address);
 };
