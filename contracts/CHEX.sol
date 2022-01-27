@@ -10,7 +10,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20FlashMin
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 /// @custom:security-contact phillip.hamnett@chintai.io
-contract ChintaiExchangeToken is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, PausableUpgradeable, AccessControlUpgradeable, ERC20PermitUpgradeable, ERC20FlashMintUpgradeable {
+contract CHEX is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, PausableUpgradeable, AccessControlUpgradeable, ERC20PermitUpgradeable, ERC20FlashMintUpgradeable {
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
@@ -18,11 +18,11 @@ contract ChintaiExchangeToken is Initializable, ERC20Upgradeable, ERC20BurnableU
   constructor() initializer {}
 
   function initialize() initializer public {
-    __ERC20_init("Chintai Exchange Token", "CHEX");
+    __ERC20_init("CHEX", "CHEX");
     __ERC20Burnable_init();
     __Pausable_init();
     __AccessControl_init();
-    __ERC20Permit_init("Chintai Exchange Token");
+    __ERC20Permit_init("CHEX");
     __ERC20FlashMint_init();
 
     _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
