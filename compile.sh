@@ -1,1 +1,1 @@
-npx truffle compile
+npx truffle compile $@

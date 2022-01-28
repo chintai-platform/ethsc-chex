@@ -4,6 +4,6 @@ const { deployProxy } = require('@openzeppelin/truffle-upgrades');
 const Chex = artifacts.require('Chex');
 
 module.exports = async function (deployer) {
-  const instance = await deployProxy(Chex, [], { deployer, initializer: 'initialize' });
+  const instance = await deployProxy(Chex, ['Chintai Exchange Token','CHEX'], { deployer, initializer: 'initialize' });
   console.log('Deployed', instance.address);
 };
