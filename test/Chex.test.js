@@ -168,8 +168,19 @@ contract('Chex', accounts => {
     expect((await contract.balanceOf(alice)).toString()).to.equal('0');
     expect((await contract.balanceOf(bob)).toString()).to.equal('2500000000000000000');
 
-    let result = (await contract.issuance()).toString();
-    expect(result.toString().substring(result.indexOf(','))).to.equal(',10000000000000000000,This is the memo');
+    let result = await contract.issuance();
+    expect(result[1][0].toString()).to.equal('10000000000000000000');
+    expect(result[2][0].toString()).to.equal('This is the memo');
+
+    await contract.issue(owner, '10000000000000000000', 'This is the second memo', {from:owner});
+    expect((await contract.totalSupply()).toString()).to.equal('23000000000000000000');
+    expect((await contract.balanceOf(owner)).toString()).to.equal('20500000000000000000');
+    expect((await contract.balanceOf(alice)).toString()).to.equal('0');
+    expect((await contract.balanceOf(bob)).toString()).to.equal('2500000000000000000');
+
+    result = await contract.issuance();
+    expect(result[1][1].toString()).to.equal('10000000000000000000');
+    expect(result[2][1].toString()).to.equal('This is the second memo');
   });
 
 
