@@ -44,6 +44,10 @@ contract('Chex', accounts => {
   console.log("owner = ", owner);
   const alice = accounts[1];
   const bob = accounts[2];
+  const minter = accounts[3];
+  const issuer = accounts[4];
+  const pauser = accounts[5];
+  const upgrader = accounts[6];
 
   it('check initial values', async function () {
     const contract = await chex.deployed();
@@ -183,5 +187,34 @@ contract('Chex', accounts => {
     expect(result[2][1].toString()).to.equal('This is the second memo');
   });
 
+  it('should allow user roles to be assigned', async() => {
+    const contract = await chex.deployed();
+
+    expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('MINTER_ROLE')), minter)).toString()).to.equal('false');
+    await contract.grantRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('MINTER_ROLE')), minter, {from:owner});
+    expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('MINTER_ROLE')), minter)).toString()).to.equal('true');
+
+    // Lets allow 2 people to pause the contract
+    expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('PAUSER_ROLE')), pauser)).toString()).to.equal('false');
+    expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('PAUSER_ROLE')), alice)).toString()).to.equal('false');
+
+    await contract.grantRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('PAUSER_ROLE')), pauser, {from:owner});
+    await contract.grantRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('PAUSER_ROLE')), alice, {from:owner});
+    
+    expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('PAUSER_ROLE')), pauser)).toString()).to.equal('true');
+    expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('PAUSER_ROLE')), alice)).toString()).to.equal('true');
+
+    expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('ISSUER_ROLE')), issuer)).toString()).to.equal('false');
+    await contract.grantRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('ISSUER_ROLE')), issuer, {from:owner});
+    expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('ISSUER_ROLE')), issuer)).toString()).to.equal('true');
+
+    expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('UPGRADER_ROLE')), upgrader)).toString()).to.equal('false');
+    await contract.grantRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('UPGRADER_ROLE')), upgrader, {from:owner});
+    expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('UPGRADER_ROLE')), upgrader)).toString()).to.equal('true');
+  });
+
+  it('should allow people with roles to call their respective actions', async() => {
+
+  });
 
 });
