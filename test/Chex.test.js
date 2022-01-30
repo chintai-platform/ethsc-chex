@@ -163,8 +163,8 @@ contract('Chex', accounts => {
     const contract = await chex.deployed();
 
     await contract.issue(owner, '10000000000000000000', 'This is the memo', {from:owner});
-    expect((await contract.totalSupply()).toString()).to.equal('3000000000000000000');
-    expect((await contract.balanceOf(owner)).toString()).to.equal('500000000000000000');
+    expect((await contract.totalSupply()).toString()).to.equal('13000000000000000000');
+    expect((await contract.balanceOf(owner)).toString()).to.equal('10500000000000000000');
     expect((await contract.balanceOf(alice)).toString()).to.equal('0');
     expect((await contract.balanceOf(bob)).toString()).to.equal('2500000000000000000');
   });

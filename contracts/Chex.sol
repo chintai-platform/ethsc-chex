@@ -31,7 +31,9 @@ contract Chex is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, Paus
     _grantRole(UPGRADER_ROLE, msg.sender);
   }
 
-  function issue() public onlyRole(ISSUE_ROLE)
+  function issue(address to, uint256 amount, string memory memo) public onlyRole(ISSUER_ROLE) {
+    _mint(to, amount);
+  }
 
   function pause() public onlyRole(PAUSER_ROLE) {
     _pause();
