@@ -167,6 +167,9 @@ contract('Chex', accounts => {
     expect((await contract.balanceOf(owner)).toString()).to.equal('10500000000000000000');
     expect((await contract.balanceOf(alice)).toString()).to.equal('0');
     expect((await contract.balanceOf(bob)).toString()).to.equal('2500000000000000000');
+
+    let result = (await contract.issuance()).toString();
+    expect(result.toString().substring(result.indexOf(','))).to.equal(',10000000000000000000,This is the memo');
   });
 
 
