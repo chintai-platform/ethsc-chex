@@ -109,4 +109,14 @@ contract('Chex', accounts => {
     expect((await contract.balanceOf(alice)).toString()).to.equal('1000000000000000000');
     expect((await contract.balanceOf(bob)).toString()).to.equal('2500000000000000000');
   });
+
+  it('should reject a transfer of tokens from an account without enough balance', async () => {
+    const contract = await chex.deployed();
+
+    await expectRevert(contract.transfer(alice, '500000000000000000000', {from:bob}), 'ERC20: transfer amount exceeds balance');
+    expect((await contract.totalSupply()).toString()).to.equal('4000000000000000000');
+    expect((await contract.balanceOf(owner)).toString()).to.equal('500000000000000000');
+    expect((await contract.balanceOf(alice)).toString()).to.equal('1000000000000000000');
+    expect((await contract.balanceOf(bob)).toString()).to.equal('2500000000000000000');
+  });
 });
