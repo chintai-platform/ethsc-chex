@@ -1,41 +1,6 @@
 const { expect } = require('chai');
 const { BN, expectEvent, expectRevert, constants } = require('@openzeppelin/test-helpers');
-//const { accounts, contract } = require('@openzeppelin/test-environment');
 const { ethers } = require('ethers');
-//
-////const chex = artifacts.require('Chex');
-//const chex = contract.fromArtifact('Chex');
-//
-//describe('Chex', function () {
-//  const [ deployer, owner, wallet, investor ] = accounts;
-//  const minter = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('MINTER_ROLE'));
-//  const pauser = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('PAUSER_ROLE'));
-//  const upgrader = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('UPGRADER_ROLE'));
-//  const default_admin = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('DEFAULT_ADMIN_ROLE'));
-//
-//  beforeEach(async function () {
-//    //this.chex = await chex.new();
-//    this.chex = await chex.new({ from: deployer });
-//  });
-//
-//   it('check initial numeric values', async function () {
-//     expect((await this.chex.decimals()).toString()).to.equal('18');
-//     expect((await this.chex.totalSupply()).toString()).to.equal('0');
-//   });
-//
-//  // it('check initial string values', async function () {
-//  //   expect((await this.chex.name()).toString()).to.equal('Chintai Exchange Token');
-//  //   expect((await this.chex.symbol()).toString()).to.equal('CHEX');
-//  // });
-//
-//  it('check mint works', async function () {
-//    await this.chex.mint(owner, '1000000000000000000');
-//    expect((await this.chex.totalSupply()).toString()).to.equal('1000000000000000000');
-//  });
-//
-//});
-
-
 
 const chex = artifacts.require('Chex');
 
@@ -214,7 +179,13 @@ contract('Chex', accounts => {
   });
 
   it('should allow people with roles to call their respective actions', async() => {
+    const contract = await chex.deployed();
 
+    await contract.mint(owner, '10000000000000000000', {from:owner});
+    await contract.mint(owner, '10000000000000000000', {from:minter});
+    await contract.pause({from:pauser});
+    await contract.unpause({from:pauser});
+    await contract.issue(owner, '10000000000000000000', 'memo', {from:issuer});
   });
 
 });
