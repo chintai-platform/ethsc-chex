@@ -17,6 +17,11 @@ module.exports = {
       port: 7545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
     },
+    live: {
+      provider: () => new HDWalletProvider(privateKey, endpointWSS),
+      network_id: 1,
+      gasPrice: 155000000000
+    },
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
     ropsten: {

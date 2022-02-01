@@ -11,15 +11,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 contract Chex is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, PausableUpgradeable, AccessControlUpgradeable, UUPSUpgradeable {
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
-  bytes32 public constant ISSUER_ROLE = keccak256("ISSUER_ROLE");
   bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
-
-  struct IssuanceList {
-    uint256[] time;
-    uint256[] amount;
-    string[] memo;
-  }
-  IssuanceList issuanceList;
 
   /// @custom:oz-upgrades-unsafe-allow constructor
   constructor() initializer {}
@@ -34,23 +26,7 @@ contract Chex is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, Paus
     _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     _grantRole(PAUSER_ROLE, msg.sender);
     _grantRole(MINTER_ROLE, msg.sender);
-    _grantRole(ISSUER_ROLE, msg.sender);
     _grantRole(UPGRADER_ROLE, msg.sender);
-
-    issuanceList.time = new uint256[](0);
-    issuanceList.amount = new uint256[](0);
-    issuanceList.memo = new string[](0);
-  }
-
-  function issue(address to, uint256 amount, string memory memo) public onlyRole(ISSUER_ROLE) {
-    _mint(to, amount);
-    issuanceList.time.push(block.timestamp);
-    issuanceList.amount.push(amount);
-    issuanceList.memo.push(memo);
-  }
-
-  function issuance() public view returns (IssuanceList memory) {
-    return issuanceList;
   }
 
   function pause() public onlyRole(PAUSER_ROLE) {

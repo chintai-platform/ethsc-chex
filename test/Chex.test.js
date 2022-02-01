@@ -10,9 +10,8 @@ contract('Chex', accounts => {
   const alice = accounts[1];
   const bob = accounts[2];
   const minter = accounts[3];
-  const issuer = accounts[4];
-  const pauser = accounts[5];
-  const upgrader = accounts[6];
+  const pauser = accounts[4];
+  const upgrader = accounts[5];
 
   it('check initial values', async function () {
     const contract = await chex.deployed();
@@ -128,30 +127,6 @@ contract('Chex', accounts => {
     expect((await contract.balanceOf(bob)).toString()).to.equal('2500000000000000000');
   });
 
-  it('should issue tokens with memo', async () => {
-    const contract = await chex.deployed();
-
-    await contract.issue(owner, '10000000000000000000', 'This is the memo', {from:owner});
-    expect((await contract.totalSupply()).toString()).to.equal('13000000000000000000');
-    expect((await contract.balanceOf(owner)).toString()).to.equal('10500000000000000000');
-    expect((await contract.balanceOf(alice)).toString()).to.equal('0');
-    expect((await contract.balanceOf(bob)).toString()).to.equal('2500000000000000000');
-
-    let result = await contract.issuance();
-    expect(result[1][0].toString()).to.equal('10000000000000000000');
-    expect(result[2][0].toString()).to.equal('This is the memo');
-
-    await contract.issue(owner, '10000000000000000000', 'This is the second memo', {from:owner});
-    expect((await contract.totalSupply()).toString()).to.equal('23000000000000000000');
-    expect((await contract.balanceOf(owner)).toString()).to.equal('20500000000000000000');
-    expect((await contract.balanceOf(alice)).toString()).to.equal('0');
-    expect((await contract.balanceOf(bob)).toString()).to.equal('2500000000000000000');
-
-    result = await contract.issuance();
-    expect(result[1][1].toString()).to.equal('10000000000000000000');
-    expect(result[2][1].toString()).to.equal('This is the second memo');
-  });
-
   it('should allow user roles to be assigned', async() => {
     const contract = await chex.deployed();
 
@@ -169,10 +144,6 @@ contract('Chex', accounts => {
     expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('PAUSER_ROLE')), pauser)).toString()).to.equal('true');
     expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('PAUSER_ROLE')), alice)).toString()).to.equal('true');
 
-    expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('ISSUER_ROLE')), issuer)).toString()).to.equal('false');
-    await contract.grantRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('ISSUER_ROLE')), issuer, {from:owner});
-    expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('ISSUER_ROLE')), issuer)).toString()).to.equal('true');
-
     expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('UPGRADER_ROLE')), upgrader)).toString()).to.equal('false');
     await contract.grantRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('UPGRADER_ROLE')), upgrader, {from:owner});
     expect((await contract.hasRole(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('UPGRADER_ROLE')), upgrader)).toString()).to.equal('true');
@@ -185,7 +156,6 @@ contract('Chex', accounts => {
     await contract.mint(owner, '10000000000000000000', {from:minter});
     await contract.pause({from:pauser});
     await contract.unpause({from:pauser});
-    await contract.issue(owner, '10000000000000000000', 'memo', {from:issuer});
   });
 
 });
