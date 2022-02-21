@@ -6,7 +6,6 @@ const chex = artifacts.require('Chex');
 
 contract('Chex', accounts => {
   let owner = accounts[0];
-  console.log("owner = ", owner);
   const alice = accounts[1];
   const bob = accounts[2];
   const minter = accounts[3];
@@ -79,7 +78,7 @@ contract('Chex', accounts => {
     await contract.decreaseAllowance(alice, '500000000000000000', {from:owner});
     expect((await contract.allowance(owner, alice)).toString()).to.equal('0');
 
-    await expectRevert(contract.transferFrom(owner, bob, '500000000000000000', {from:alice}), 'ERC20: transfer amount exceeds allowance');
+    await expectRevert(contract.transferFrom(owner, bob, '500000000000000000', {from:alice}), 'ERC20: insufficient allowance');
 
     expect((await contract.totalSupply()).toString()).to.equal('4000000000000000000');
     expect((await contract.balanceOf(owner)).toString()).to.equal('500000000000000000');
@@ -120,7 +119,7 @@ contract('Chex', accounts => {
   it('should not burn tokens of someone else', async () => {
     const contract = await chex.deployed();
 
-    await expectRevert(contract.burnFrom(owner, '10000000000000000', {from:bob}), 'ERC20: burn amount exceeds allowance -- Reason given: ERC20: burn amount exceeds allowance.');
+    await expectRevert(contract.burnFrom(owner, '10000000000000000', {from:bob}), 'ERC20: insufficient allowance');
     expect((await contract.totalSupply()).toString()).to.equal('3000000000000000000');
     expect((await contract.balanceOf(owner)).toString()).to.equal('500000000000000000');
     expect((await contract.balanceOf(alice)).toString()).to.equal('0');
@@ -157,5 +156,4 @@ contract('Chex', accounts => {
     await contract.pause({from:pauser});
     await contract.unpause({from:pauser});
   });
-
 });
