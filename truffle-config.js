@@ -1,11 +1,11 @@
 //const { endpointHTTPS, endpointWSS, privateKey, etherscanAPIKey} = require('./.secrets.json');
-const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require("@truffle/hdwallet-provider");
 
 require("dotenv").config();
 const { MNEMONIC, PROJECT_ID } = process.env;
 
 module.exports = {
-  plugins: ['truffle-plugin-verify'],
+  plugins: ["truffle-plugin-verify"],
 
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
@@ -15,9 +15,9 @@ module.exports = {
     // options below to some value.
     //
     development: {
-      host: "127.0.0.1",     // Localhost (default: none)
-      port: 7545,            // Standard Ethereum port (default: none)
-      network_id: "*",       // Any network (default: none)
+      host: "127.0.0.1", // Localhost (default: none)
+      port: 7545, // Standard Ethereum port (default: none)
+      network_id: "*", // Any network (default: none)
     },
     // live: {
     //   provider: () => new HDWalletProvider(privateKey, endpointWSS),
@@ -36,15 +36,26 @@ module.exports = {
     // }
     goerli: {
       provider: () =>
-          new HDWalletProvider(
-              MNEMONIC,
-              `https://goerli.infura.io/v3/${PROJECT_ID}`,
-          ),
+        new HDWalletProvider(
+          MNEMONIC,
+          `https://goerli.infura.io/v3/${PROJECT_ID}`
+        ),
       network_id: 5, // Goerli's id
       confirmations: 2, // # of confirmations to wait between deployments. (default: 0)
       timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
-  },
+    },
+    sepolia: {
+      provider: () =>
+        new HDWalletProvider(
+          MNEMONIC,
+          `https://sepolia.infura.io/v3/${PROJECT_ID}`
+        ),
+      network_id: 11155111, // Goerli's id
+      confirmations: 2, // # of confirmations to wait between deployments. (default: 0)
+      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+    },
   },
 
   // Set default mocha options here, use special reporters etc.
@@ -55,11 +66,10 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.8.11"    // Fetch exact version from solc-bin (default: truffle's version)
-    }
+      version: "0.8.11", // Fetch exact version from solc-bin (default: truffle's version)
+    },
   },
-  // api_keys: {
-  //   etherscan: etherscanAPIKey
-  // }
-
+  api_keys: {
+    etherscan: 'DGWJCH4CETEBP6Q945181G7KIRMK2RM17H'
+  }
 };
