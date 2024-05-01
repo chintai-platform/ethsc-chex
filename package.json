@@ -27,7 +27,8 @@
     "dotenv": "^16.3.1",
     "ethers": "^5.7.2",
     "openzeppelin-solidity": "^4.8.1",
-    "truffle": "^5.11.5"
+    "truffle": "^5.11.5",
+    "truffle-hdwallet-provider-privkey": "^0.3.0"
   },
   "devDependencies": {
     "@openzeppelin/truffle-upgrades": "^1.21.0",

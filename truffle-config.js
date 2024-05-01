@@ -2,7 +2,7 @@
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 
 require("dotenv").config();
-const { MNEMONIC, PROJECT_ID } = process.env;
+
 
 module.exports = {
   plugins: ["truffle-plugin-verify"],
@@ -19,32 +19,57 @@ module.exports = {
       port: 7545, // Standard Ethereum port (default: none)
       network_id: "*", // Any network (default: none)
     },
-    // live: {
-    //   provider: () => new HDWalletProvider(privateKey, endpointWSS),
-    //   network_id: 1,
-    //   gasPrice: 155000000000
-    // },
-    // // Useful for deploying to a public network.
-    // // NB: It's important to wrap the provider as a function.
-    // ropsten: {
-    //   provider: () => new HDWalletProvider(privateKey, endpointWSS),
-    //   network_id: 3,       // Ropsten's id
-    //   gas: 5500000,        // Ropsten has a lower block limit than mainnet
-    //   confirmations: 2,    // # of confs to wait between deployments. (default: 0)
-    //   timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-    //   skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
-    // }
+    'bsc-testnet': {
+      provider: () =>
+        new HDWalletProvider(process.env.MAIN_WALLET_MNUMONIC, 'https://data-seed-prebsc-1-s1.bnbchain.org:8545'),
+      network_id: 97,
+      confirmations: 2, 
+      timeoutBlocks: 200, 
+      skipDryRun: true,
+      verify:{
+        apiUrl: "https://api-testnet.bscscan.com/api",
+        apiKey: process.env.BSCSCAN_API_KEY,
+        explorerUrl: "https://testnet.bscscan.com/",
+      }
+    },
+    'base-mainnet': {
+      provider: () =>
+        new HDWalletProvider(process.env.MAIN_WALLET_MNUMONIC, `'https://mainnet.base.org`),
+      network_id: 8453,
+      confirmations: 2, // # of confirmations to wait between deployments. (default: 0)
+      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+      verify:{
+        apiUrl: "https://api.basescan.org/api",
+        apiKey: process.env.BASESCAN_API_KEY,
+        explorerUrl: "https://basescan.org",
+      }
+    },
+    "base-sepolia": {
+      provider: () =>
+        new HDWalletProvider(process.env.MAIN_WALLET_MNUMONIC, `https://sepolia.base.org`),
+      network_id: 84532,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true,
+      verify:{
+        apiUrl: "https://api-sepolia.basescan.org/api",
+        apiKey: process.env.BASESCAN_API_KEY,
+        explorerUrl: "https://sepolia.basescan.org",
+      }
+    },
     goerli: {
       provider: () =>
         new HDWalletProvider(
           MNEMONIC,
           `https://goerli.infura.io/v3/${PROJECT_ID}`
         ),
-      network_id: 5, // Goerli's id
-      confirmations: 2, // # of confirmations to wait between deployments. (default: 0)
-      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
-      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+      network_id: 5,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true,
     },
+
     sepolia: {
       provider: () =>
         new HDWalletProvider(
@@ -53,8 +78,8 @@ module.exports = {
         ),
       network_id: 11155111, // Goerli's id
       confirmations: 2, // # of confirmations to wait between deployments. (default: 0)
-      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
-      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+      timeoutBlocks: 200,
+      skipDryRun: true,
     },
   },
 
@@ -70,6 +95,11 @@ module.exports = {
     },
   },
   api_keys: {
-    etherscan: 'DGWJCH4CETEBP6Q945181G7KIRMK2RM17H'
-  }
+    "base-sepolia": process.env.BASESCAN_API_KEY ?? "",
+    "base-mainnet": process.env.BASESCAN_API_KEY ?? "",
+    etherscan: process.env.ETHERSCAN_API_KEY ?? "",
+    basescan: process.env.ETHERSCAN_API_KEY ?? "",
+    sepolia: process.env.ETHERSCAN_API_KEY ?? "",
+    goerli: process.env.ETHERSCAN_API_KEY ?? "",
+  },
 };
