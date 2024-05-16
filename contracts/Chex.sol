@@ -12,6 +12,7 @@ contract Chex is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, Paus
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
   bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
+  uint256 private _maxSupply;
 
   /// @custom:oz-upgrades-unsafe-allow constructor
   constructor() initializer {}
@@ -37,7 +38,16 @@ contract Chex is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, Paus
     _unpause();
   }
 
+  function setMaxSupply(uint256 amount) public onlyRole(MINTER_ROLE) {
+    _maxSupply = amount;
+  }
+
+  function maxSupply() public view virtual override returns (uint256) {
+    return _maxSupply;
+  }
+
   function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
+    require(_totalSupply + amount <= _maxSupply, "ERC20: insufficient supply");
     _mint(to, amount);
   }
 
