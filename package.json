@@ -21,17 +21,19 @@
   },
   "homepage": "https://github.com/chintai-platform/ethsc-chex#readme",
   "dependencies": {
-    "@openzeppelin/contracts-upgradeable": "^4.5.1",
+    "@openzeppelin/contracts-upgradeable": "^4.9.5",
     "@openzeppelin/test-environment": "^0.1.9",
-    "@openzeppelin/test-helpers": "^0.5.15",
-    "ethers": "^5.5.4",
-    "openzeppelin-solidity": "^4.5.0",
-    "truffle": "^5.5.0"
+    "@openzeppelin/test-helpers": "^0.5.16",
+    "dotenv": "^16.3.1",
+    "ethers": "^5.7.2",
+    "openzeppelin-solidity": "^4.8.1",
+    "truffle": "^5.11.5",
+    "truffle-hdwallet-provider-privkey": "^0.3.0"
   },
   "devDependencies": {
-    "@openzeppelin/truffle-upgrades": "^1.12.0",
-    "@truffle/hdwallet-provider": "^2.0.3",
-    "chai": "^4.3.6",
-    "truffle-plugin-verify": "^0.5.21"
+    "@openzeppelin/truffle-upgrades": "^1.21.0",
+    "@truffle/hdwallet-provider": "^2.1.15",
+    "chai": "^4.4.1",
+    "truffle-plugin-verify": "^0.5.33"
   }
 }
