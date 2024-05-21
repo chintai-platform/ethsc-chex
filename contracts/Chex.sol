@@ -28,6 +28,8 @@ contract Chex is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, Paus
     _grantRole(PAUSER_ROLE, msg.sender);
     _grantRole(MINTER_ROLE, msg.sender);
     _grantRole(UPGRADER_ROLE, msg.sender);
+
+    _maxSupply = 1000000000000000000000000000;
   }
 
   function pause() public onlyRole(PAUSER_ROLE) {
@@ -39,10 +41,12 @@ contract Chex is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, Paus
   }
 
   function setMaxSupply(uint256 amount) public onlyRole(MINTER_ROLE) {
+    // Can't set max supply to be less than current supply
+    require(amount >= _totalSupply, "ERC20: can not set max supply less than current supply");
     _maxSupply = amount;
   }
 
-  function maxSupply() public view virtual override returns (uint256) {
+  function maxSupply() public view returns (uint256) {
     return _maxSupply;
   }
 
