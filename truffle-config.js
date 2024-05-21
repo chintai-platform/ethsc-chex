@@ -61,8 +61,8 @@ module.exports = {
     goerli: {
       provider: () =>
         new HDWalletProvider(
-          MNEMONIC,
-          `https://goerli.infura.io/v3/${PROJECT_ID}`
+            process.env.MAIN_WALLET_MNUMONIC,
+          `https://goerli.infura.io/v3/${process.env.PROJECT_ID}`
         ),
       network_id: 5,
       confirmations: 2,
@@ -73,8 +73,8 @@ module.exports = {
     sepolia: {
       provider: () =>
         new HDWalletProvider(
-          MNEMONIC,
-          `https://sepolia.infura.io/v3/${PROJECT_ID}`
+            process.env.MAIN_WALLET_MNUMONIC,
+          `https://sepolia.infura.io/v3/${process.env.PROJECT_ID}`
         ),
       network_id: 11155111, // Goerli's id
       confirmations: 2, // # of confirmations to wait between deployments. (default: 0)

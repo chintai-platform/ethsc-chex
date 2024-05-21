@@ -1,1 +1,1 @@
-npx truffle run verify Chex --network live
+npx truffle run verify Chex $@
