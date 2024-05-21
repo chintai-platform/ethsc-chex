@@ -42,7 +42,7 @@ contract Chex is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, Paus
 
   function setMaxSupply(uint256 amount) public onlyRole(MINTER_ROLE) {
     // Can't set max supply to be less than current supply
-    require(amount >= _totalSupply, "ERC20: can not set max supply less than current supply");
+    require(amount >= totalSupply(), "ERC20: can not set max supply less than current supply");
     _maxSupply = amount;
   }
 
@@ -51,7 +51,7 @@ contract Chex is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, Paus
   }
 
   function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
-    require(_totalSupply + amount <= _maxSupply, "ERC20: insufficient supply");
+    require(totalSupply() + amount <= _maxSupply, "ERC20: insufficient supply");
     _mint(to, amount);
   }
 
