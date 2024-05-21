@@ -3,7 +3,6 @@ const HDWalletProvider = require("@truffle/hdwallet-provider");
 
 require("dotenv").config();
 
-
 module.exports = {
   plugins: ["truffle-plugin-verify"],
 
@@ -19,49 +18,58 @@ module.exports = {
       port: 7545, // Standard Ethereum port (default: none)
       network_id: "*", // Any network (default: none)
     },
-    'bsc-testnet': {
+    "bsc-testnet": {
       provider: () =>
-        new HDWalletProvider(process.env.MAIN_WALLET_MNUMONIC, 'https://data-seed-prebsc-1-s1.bnbchain.org:8545'),
+        new HDWalletProvider(
+          process.env.MAIN_WALLET_MNUMONIC,
+          "https://data-seed-prebsc-1-s1.bnbchain.org:8545"
+        ),
       network_id: 97,
-      confirmations: 2, 
-      timeoutBlocks: 200, 
+      confirmations: 2,
+      timeoutBlocks: 200,
       skipDryRun: true,
-      verify:{
+      verify: {
         apiUrl: "https://api-testnet.bscscan.com/api",
         apiKey: process.env.BSCSCAN_API_KEY,
         explorerUrl: "https://testnet.bscscan.com/",
-      }
+      },
     },
-    'base-mainnet': {
+    "base-mainnet": {
       provider: () =>
-        new HDWalletProvider(process.env.MAIN_WALLET_MNUMONIC, `'https://mainnet.base.org`),
+        new HDWalletProvider(
+          process.env.MAIN_WALLET_MNUMONIC,
+          `'https://mainnet.base.org`
+        ),
       network_id: 8453,
       confirmations: 2, // # of confirmations to wait between deployments. (default: 0)
       timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
-      verify:{
+      verify: {
         apiUrl: "https://api.basescan.org/api",
         apiKey: process.env.BASESCAN_API_KEY,
         explorerUrl: "https://basescan.org",
-      }
+      },
     },
     "base-sepolia": {
       provider: () =>
-        new HDWalletProvider(process.env.MAIN_WALLET_MNUMONIC, `https://sepolia.base.org`),
+        new HDWalletProvider(
+          process.env.MAIN_WALLET_MNUMONIC,
+          `https://sepolia.base.org`
+        ),
       network_id: 84532,
       confirmations: 2,
       timeoutBlocks: 200,
       skipDryRun: true,
-      verify:{
+      verify: {
         apiUrl: "https://api-sepolia.basescan.org/api",
         apiKey: process.env.BASESCAN_API_KEY,
         explorerUrl: "https://sepolia.basescan.org",
-      }
+      },
     },
     goerli: {
       provider: () =>
         new HDWalletProvider(
-          MNEMONIC,
+          process.env.MAIN_WALLET_MNUMONIC,
           `https://goerli.infura.io/v3/${PROJECT_ID}`
         ),
       network_id: 5,
@@ -73,7 +81,7 @@ module.exports = {
     sepolia: {
       provider: () =>
         new HDWalletProvider(
-          MNEMONIC,
+          process.env.MAIN_WALLET_MNUMONIC,
           `https://sepolia.infura.io/v3/${PROJECT_ID}`
         ),
       network_id: 11155111, // Goerli's id
