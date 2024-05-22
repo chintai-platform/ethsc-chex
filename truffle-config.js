@@ -18,12 +18,29 @@ module.exports = {
       port: 7545, // Standard Ethereum port (default: none)
       network_id: "*", // Any network (default: none)
     },
+
+    "ethereum": {
+      provider: () =>
+          new HDWalletProvider(
+              process.env.MAIN_WALLET_KEY,
+              "https://young-solemn-sound.quiknode.pro/3fd7401b09fb5230db3a7418916386812f477d93/"
+          ),
+      network_id: 1,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true,
+      verify: {
+        apiUrl: "https://api.etherscan.com/api",
+        apiKey: process.env.ETHSCAN_API_KEY,
+        explorerUrl: "https:/etherscan.com/",
+      },
+    },
     "bsc-testnet": {
       provider: () =>
-        new HDWalletProvider(
-          process.env.MAIN_WALLET_MNUMONIC,
-          "https://data-seed-prebsc-1-s1.bnbchain.org:8545"
-        ),
+          new HDWalletProvider(
+              process.env.MAIN_WALLET_MNUMONIC,
+              "https://data-seed-prebsc-1-s1.bnbchain.org:8545"
+          ),
       network_id: 97,
       confirmations: 2,
       timeoutBlocks: 200,
@@ -32,6 +49,22 @@ module.exports = {
         apiUrl: "https://api-testnet.bscscan.com/api",
         apiKey: process.env.BSCSCAN_API_KEY,
         explorerUrl: "https://testnet.bscscan.com/",
+      },
+    },
+    "bsc": {
+      provider: () =>
+          new HDWalletProvider(
+              process.env.MAIN_WALLET_KEY,
+              "https://proud-black-valley.bsc.quiknode.pro/1ae249cd8feec6d644de72b1ffd84eea3b02d859/"
+          ),
+      network_id: 56,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true,
+      verify: {
+        apiUrl: "https://api.bscscan.com/api",
+        apiKey: process.env.BSCSCAN_API_KEY,
+        explorerUrl: "https:/bscscan.com/",
       },
     },
     "base-mainnet": {
