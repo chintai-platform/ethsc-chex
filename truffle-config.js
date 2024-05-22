@@ -37,8 +37,8 @@ module.exports = {
     "base-mainnet": {
       provider: () =>
         new HDWalletProvider(
-          process.env.MAIN_WALLET_MNUMONIC,
-          `'https://mainnet.base.org`
+          process.env.MAIN_WALLET_KEY,
+          "https://white-nameless-bridge.base-mainnet.quiknode.pro/0de97bcbc4e2ded260513dfb43dd480b223d0c7f/"
         ),
       network_id: 8453,
       confirmations: 2, // # of confirmations to wait between deployments. (default: 0)
