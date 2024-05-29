@@ -38,7 +38,7 @@ module.exports = {
     "bsc-testnet": {
       provider: () =>
           new HDWalletProvider(
-              process.env.MAIN_WALLET_MNUMONIC,
+              process.env.MAIN_WALLET_KEY,
               "https://data-seed-prebsc-1-s1.bnbchain.org:8545"
           ),
       network_id: 97,
@@ -86,7 +86,7 @@ module.exports = {
     "base-sepolia": {
       provider: () =>
         new HDWalletProvider(
-          process.env.MAIN_WALLET_MNUMONIC,
+          process.env.MAIN_WALLET_KEY,
           `https://sepolia.base.org`
         ),
       network_id: 84532,
@@ -102,7 +102,7 @@ module.exports = {
     goerli: {
       provider: () =>
         new HDWalletProvider(
-          process.env.MAIN_WALLET_MNUMONIC,
+          process.env.MAIN_WALLET_KEY,
           `https://goerli.infura.io/v3/${PROJECT_ID}`
         ),
       network_id: 5,
@@ -114,7 +114,7 @@ module.exports = {
     sepolia: {
       provider: () =>
         new HDWalletProvider(
-          process.env.MAIN_WALLET_MNUMONIC,
+          process.env.MAIN_WALLET_KEY,
           `https://sepolia.infura.io/v3/${PROJECT_ID}`
         ),
       network_id: 11155111, // Goerli's id
