@@ -18,12 +18,11 @@ module.exports = {
       port: 7545, // Standard Ethereum port (default: none)
       network_id: "*", // Any network (default: none)
     },
-
     "ethereum": {
       provider: () =>
           new HDWalletProvider(
               process.env.MAIN_WALLET_KEY,
-              "https://young-solemn-sound.quiknode.pro/3fd7401b09fb5230db3a7418916386812f477d93/"
+              process.env.ETHEREUM_RPC_PROVIDER_URL
           ),
       network_id: 1,
       confirmations: 2,
@@ -38,7 +37,7 @@ module.exports = {
     "bsc-testnet": {
       provider: () =>
           new HDWalletProvider(
-              process.env.MAIN_WALLET_KEY,
+              process.env.MAIN_WALLET_MNUMONIC,
               "https://data-seed-prebsc-1-s1.bnbchain.org:8545"
           ),
       network_id: 97,
@@ -55,7 +54,7 @@ module.exports = {
       provider: () =>
           new HDWalletProvider(
               process.env.MAIN_WALLET_KEY,
-              "https://proud-black-valley.bsc.quiknode.pro/1ae249cd8feec6d644de72b1ffd84eea3b02d859/"
+              process.env.BASE_RPC_PROVIDER_URL
           ),
       network_id: 56,
       confirmations: 2,
@@ -71,7 +70,7 @@ module.exports = {
       provider: () =>
         new HDWalletProvider(
           process.env.MAIN_WALLET_KEY,
-          "https://white-nameless-bridge.base-mainnet.quiknode.pro/0de97bcbc4e2ded260513dfb43dd480b223d0c7f/"
+          process.env.BASE_RPC_PROVIDER_URL
         ),
       network_id: 8453,
       confirmations: 2, // # of confirmations to wait between deployments. (default: 0)
@@ -86,7 +85,7 @@ module.exports = {
     "base-sepolia": {
       provider: () =>
         new HDWalletProvider(
-          process.env.MAIN_WALLET_KEY,
+          process.env.MAIN_WALLET_MNUMONIC,
           `https://sepolia.base.org`
         ),
       network_id: 84532,
@@ -102,7 +101,7 @@ module.exports = {
     goerli: {
       provider: () =>
         new HDWalletProvider(
-          process.env.MAIN_WALLET_KEY,
+          process.env.MAIN_WALLET_MNUMONIC,
           `https://goerli.infura.io/v3/${PROJECT_ID}`
         ),
       network_id: 5,
@@ -110,11 +109,10 @@ module.exports = {
       timeoutBlocks: 200,
       skipDryRun: true,
     },
-
     sepolia: {
       provider: () =>
         new HDWalletProvider(
-          process.env.MAIN_WALLET_KEY,
+          process.env.MAIN_WALLET_MNUMONIC,
           `https://sepolia.infura.io/v3/${PROJECT_ID}`
         ),
       network_id: 11155111, // Goerli's id
