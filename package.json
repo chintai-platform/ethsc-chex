@@ -1,30 +1,23 @@
 {
   "name": "ethsc-chex",
   "version": "1.0.0",
-  "description": "## Initial Setup Run `./init.sh`",
+  "description": "CHEX smart contract on Ethereum",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "truffle test",
+    "compile": "truffle compile",
+    "deploy": "truffle migrate",
+    "verify": "truffle run verify Chex --network live"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/chintai-platform/ethsc-chex.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/chintai-platform/ethsc-chex/issues"
-  },
-  "homepage": "https://github.com/chintai-platform/ethsc-chex#readme",
+  "packageManager": "pnpm@9.11.0",
   "dependencies": {
-    "@openzeppelin/contracts-upgradeable": "^4.9.5",
+    "@openzeppelin/contracts-upgradeable": "^4.9.6",
     "@openzeppelin/test-environment": "^0.1.9",
     "@openzeppelin/test-helpers": "^0.5.16",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.5",
     "ethers": "^5.7.2",
     "openzeppelin-solidity": "^4.8.1",
     "truffle": "^5.11.5",
@@ -33,7 +26,24 @@
   "devDependencies": {
     "@openzeppelin/truffle-upgrades": "^1.21.0",
     "@truffle/hdwallet-provider": "^2.1.15",
-    "chai": "^4.4.1",
+    "chai": "^4.5.0",
     "truffle-plugin-verify": "^0.5.33"
-  }
+  },
+  "pnpm": {
+    "overrides": {
+      "axios@    >=1.3.2 <1.7.4": "^1.7.4",
+      "lodash@   >=4.0.0 <4.17.21": "^4.17.21",
+      "secp256k1@>=4.0.0 <4.0.4": "^4.0.4",
+      "ws@       >=7.0.0 <7.5.10": "^7.5.10",
+      "ws@       >=8.0.0 <8.17.1": "^8.17.1"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chintai-platform/ethsc-chex.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chintai-platform/ethsc-chex/issues"
+  },
+  "homepage": "https://github.com/chintai-platform/ethsc-chex#readme"
 }
